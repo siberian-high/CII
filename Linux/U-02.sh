@@ -31,7 +31,7 @@ RESULT_S=${DIR_RESULT}/${DATE}_${HOSTNAME}_simple_result.txt
 ###################################################################### 
 {
         echo "==========================================================="
-        echo "<U-02>Password policy check"                     
+	echo "<U-02>Check password policy"
         echo "==========================================================="
 } | tee -a $RESULT_S $RESULT_F
 
