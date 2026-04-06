@@ -1,2 +1,2 @@
 # CII
-CII: Repository for Critical Information Infrastructure vulnerability assessment
+CII: Scripts for Critical Information Infrastructure vulnerability assessment
