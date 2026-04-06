@@ -46,11 +46,11 @@ fi
 ######################################################################
 ##U-04: START
 ###################################################################### 
-echo "===========================================================" | tee $RESULT_S $RESULT_F
+echo "===========================================================" | tee "$RESULT_S" "$RESULT_F"
 {
         echo "<U-04>Check password files"                     
         echo "==========================================================="
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
 
 ######################################################################
@@ -67,9 +67,9 @@ echo "===========================================================" | tee $RESULT
 		echo "Reason: Accounts not using the shadow password file were not detected."
 	fi
 	
-echo $PASSWD
+echo "$PASSWD"
 echo ""
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
 
 ######################################################################
@@ -87,9 +87,9 @@ echo ""
 		echo "Reason: Accounts not using the safe hash were not detected."
 	fi
 
-echo $SHADOW
+echo "$SHADOW"
 echo ""
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
 
 ######################################################################
@@ -100,4 +100,4 @@ echo ""
 	echo "END"
 	echo "==========================================================="
         echo ""
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"

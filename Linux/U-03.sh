@@ -45,18 +45,18 @@ fi
 ######################################################################
 ##U-03: START
 ###################################################################### 
-echo "===========================================================" | tee $RESULT_S $RESULT_F
+echo "===========================================================" | tee "$RESULT_S" "$RESULT_F"
 {
         echo "<U-03>Check password threshold"                     
         echo "==========================================================="
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
 
 ######################################################################
 ##U-03: Check /etc/security/faillock.conf
 ######################################################################
 {
-	if [ -z  $FAILLOCK ] || [ $FAILLOCK -gt 10 ]; then
+	if [ -z  "$FAILLOCK" ] || [ "$FAILLOCK" -gt 10 ]; then
 		echo "Result: VULNERABLE"
 		echo "Reason: There's no threshold or threshold is over 10"
 	else
@@ -65,7 +65,7 @@ echo "===========================================================" | tee $RESULT
 	fi
 
 echo "$(grep "deny =" /etc/security/faillock.conf)"
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
 
 ######################################################################
@@ -76,5 +76,5 @@ echo "$(grep "deny =" /etc/security/faillock.conf)"
         echo "END"
         echo "==========================================================="
         echo ""
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
