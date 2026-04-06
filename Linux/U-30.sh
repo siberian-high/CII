@@ -20,7 +20,8 @@ export LANGUAGE
 ######################################################################
 DATE=$(date +%Y%m%d)
 HOSTNAME=$(hostname)
-FAILLOCK=$(awk -F= '/^[[:space:]]*deny/ {gsub(/ /,"",$2); print $2}' /etc/security/faillock.conf)
+PROFILE=$(awk '/^[[:space:]]*UMASK/ {print $2}' /etc/profile)
+LOGIN=$(awk '/^[[:space:]]*UMASK/ {print $2}' /etc/login.defs)
 DIR_SCRIPT=$(cd "$(dirname "$0")" && pwd)
 DIR_RESULT=${DIR_SCRIPT}/../Results
 RESULT_F=${DIR_RESULT}/${DATE}_${HOSTNAME}_full_result.txt
@@ -43,38 +44,52 @@ fi
 
 
 ######################################################################
-##U-03: START
+##U-30: START
 ###################################################################### 
-echo "===========================================================" | tee $RESULT_S $RESULT_F
+echo "===========================================================" | tee "$RESULT_S" "$RESULT_F"
 {
-        echo "<U-03>Check password threshold"                     
+        echo "<U-30>Check Umask"                     
         echo "==========================================================="
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
 
 ######################################################################
-##U-03: Check /etc/security/faillock.conf
+##U-30: Check /etc/profile & /etc/login.defs
 ######################################################################
 {
-	if [ -z  $FAILLOCK ] || [ $FAILLOCK -gt 10 ]; then
-		echo "Result: VULNERABLE"
-		echo "Reason: There's no threshold or threshold is over 10"
+	if [ -n "$PROFILE" ]; then
+		{
+			if [ "$PROFILE" != 022 ]; then
+				echo "Result: VULNERABLE"
+				echo "Reason: UMASK is not 022"
+			else
+				echo "Result: SAFE"
+				echo "Result: UMASK is appropriate"
+			fi
+		}
+	elif [ -z "$PROFILE" ]; then
+		{
+			if [ -z "$LOGIN" ] || [ "$LOGIN" != 022 ]; then
+                		echo "Result: VULNERABLE"
+                		echo "Reason: UMASK is not 022"
+        		else
+                		echo "Result: SAFE"
+                		echo "Reason: UMASK is appropriate"
+        		fi
+		}
 	else
 		echo "Result: SAFE"
-		echo "Reason: Threshold is under 11"
+		echo "Reason: UMASK is appropriate"
 	fi
-
-echo "$(grep "deny =" /etc/security/faillock.conf)"
-} | tee -a $RESULT_S $RESULT_F
+} | tee -a "$RESULT_S" "$RESULT_F"
 
 
 ######################################################################
-##U-03: END
+##U-30: END
 ######################################################################
 {
-        echo "==========================================================="
-        echo "END"
-        echo "==========================================================="
+	echo "==========================================================="
+	echo "END"
+	echo "==========================================================="
         echo ""
-} | tee -a $RESULT_S $RESULT_F
-
+} | tee -a "$RESULT_S" "$RESULT_F"
