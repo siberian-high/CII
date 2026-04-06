@@ -27,6 +27,21 @@ RESULT_S=${DIR_RESULT}/${DATE}_${HOSTNAME}_simple_result.txt
 
 
 ######################################################################
+#Check root permission
+######################################################################
+echo "==========================================================="
+echo "Check root permission"
+echo "==========================================================="
+
+if [ "$(id -u)" -ne 0 ]; then
+        echo "This script is not running on root"
+        exit
+else
+        echo "This script is running on root"
+fi
+
+
+######################################################################
 ##U-02: START
 ###################################################################### 
 {
@@ -36,8 +51,6 @@ RESULT_S=${DIR_RESULT}/${DATE}_${HOSTNAME}_simple_result.txt
 } | tee -a $RESULT_S $RESULT_F
 
 
-
-
 ######################################################################
 ##U-02: END
 ######################################################################
@@ -45,5 +58,3 @@ RESULT_S=${DIR_RESULT}/${DATE}_${HOSTNAME}_simple_result.txt
         echo ""
         echo ""
 } | tee -a $RESULT_S $RESULT_F
-
-
